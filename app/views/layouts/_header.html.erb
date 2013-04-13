@@ -5,8 +5,19 @@
 		<div id='cssmenu'>
 			<ul>
 				<li ><%= link_to "Home", root_url %>	
-				<li><%= link_to "Blog", "/static_pages/blog" %>						
-				<li class='has-sub'><%= link_to "Help", "/static_pages/help" %>						
+				<li><%= link_to "Blog", blog_path%>			
+				<li class="has-sub"> <%= link_to "Profile" %>
+					<ul>
+						<% if signed_in?%>
+							<li><%= link_to "Edit Profile" , edit_user_path(current_user)%></li>
+							<li><%= link_to "Sign out" , signout_path, :method=>:delete%></li>							
+						<%else%>
+							<li><%= link_to "Sign up" , signup_path(current_user)%></li>
+							<li><%= link_to "Sign in" , signin_path%></li>		
+						<%end%>
+					</ul>
+				</li>			
+				<li ><%= link_to "Help", "/static_pages/help" %>						
 				</li>			   
 			</ul>
 		</div>     

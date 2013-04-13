@@ -16,4 +16,26 @@ class User < ActiveRecord::Base
   def self.authenticate(username, password)
     find_by_username(username).try(:authenticate, password)
   end
+   before_save:create_remember_token
+  has_many :entries  
+  def self.check(username,password) 
+	user =find_by_username(username)
+	if user && user.password==password
+		user
+	else
+		nil
+	end
+  end 
+
+  def feed
+  	Entry.where("user_id =?",id)
+  end    
+  private
+  def create_remember_token
+      if(self.remember_token==nil)
+  	     self.remember_token = SecureRandom.urlsafe_base64
+      end
+  end
+  
+
 end

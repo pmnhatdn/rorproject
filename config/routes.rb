@@ -6,9 +6,12 @@ Rorproject::Application.routes.draw do
   get "static_pages/help"
   root :to => 'static_pages#home'
   resources :users
+  resources :static_pages
+  resources :sessions, only: [:new, :create, :destroy]  
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+  match '/blog', to: 'static_pages#blog'
 
 
   # The priority is based upon order of creation:
