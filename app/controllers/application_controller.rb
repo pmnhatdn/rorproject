@@ -1,4 +1,8 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::Base  
   protect_from_forgery
   include SessionsHelper
+  private
+  def signed_in_user
+      redirect_to signin_url, notice: "Please sign in."
+  end
 end

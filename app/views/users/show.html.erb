@@ -11,5 +11,14 @@
     <p>Fullname: <%=@user.fullname%></p>
     <p>Email: <%=@user.email%></p>	
   </section
+  <div class="span8">
+    <% if @entries.any? %>
+      <h3>Entries (<%= @entries.count %>)</h3>
+      <ol class="entries">
+        <%= render @entries %>
+      </ol>
+      <%= will_paginate @entries %>
+    <% end %>
+  </div>
 </div>
 

@@ -1,5 +1,31 @@
-<h1>Sign Up</h2>
-
-<%= render 'form' %>
-
+<% provide(:title, "Sign up") %> 
+<h1>Create an account</h1>
+<%= form_for(@user) do |f| %>
+  <%= render 'shared/error', object: f.object %>
+  <div align="center">  
+  <div class="field">
+    <%= f.label :Username %>
+	<%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :Password %>
+	<%= f.password_field :password %> 
+  </div>
+  <div class="field">
+    <%= f.label :Confirm_Password %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="field">
+    <%= f.label :fullname %>
+    <%= f.text_field :fullname %>
+  </div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>  
+  <div class="actions">
+    <%= f.submit "Sign up" , class: "btn btn-large btn-primary"%>
+  </div>
+</div>
+<% end %>
 

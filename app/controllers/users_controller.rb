@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+before_filter :signed_in_check, only: [:index, :edit, :update]
+before_filter :correct_user,   only: [:edit, :update]
 def index
     @users = User.all
 
@@ -12,10 +14,11 @@ def index
   # GET /users/1.json
   def show
     @user = User.find(params[:id])    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
-    end
+    #respond_to do |format|
+     # format.html # show.html.erb
+      #format.json { render json: @user }
+    #end     
+    @entries = @user.feed.paginate(page: params[:page])
   end
 
   # GET /users/new
@@ -41,9 +44,9 @@ def index
 
     respond_to do |format|
       if @user.save
-       # format.html { redirect_to signin_path, notice: 'Sign up successfully' }
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+        format.html { redirect_to signin_path, notice: 'Sign up successfully' }
+       ## format.html { redirect_to @user, notice: 'User was successfully created.' }
+       ## format.json { render json: @user, status: :created, location: @user }
 #		redirect_to signin_path
       else
         format.html { render action: "new" }
@@ -79,6 +82,24 @@ def index
       format.json { head :no_content }
     end
   end
+  private
+
+    def signed_in_user
+      redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    end
+
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
+      end
+    end
+
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_path) unless current_user?(@user)
+    end
+
 end
 	
 
