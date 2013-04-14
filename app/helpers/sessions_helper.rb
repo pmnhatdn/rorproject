@@ -19,6 +19,7 @@ module SessionsHelper
 	#check for models filer
 	def signed_in_check
 	   unless signed_in?
+	   	  store_location
 	      redirect_to signin_url, notice: current_user
 	   end
 	end
@@ -49,6 +50,7 @@ module SessionsHelper
     	user == current_user
   	end
   	
+  	# store the URL/URI of the requested page
   	def store_location
     	session[:return_to] = request.url
   	end
